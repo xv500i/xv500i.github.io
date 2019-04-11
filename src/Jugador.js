@@ -1,5 +1,3 @@
-
-
 function Jugador() {
     this.atac = 0;
     this.defensa = 0;
