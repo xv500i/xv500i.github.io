@@ -1,167 +1,23 @@
 <!doctype html>
+
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <title>Dungeon Delver</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-    <link rel="stylesheet" href="css/alineapp.css">
+  <link rel="stylesheet" href="css/app.css">
 
-    <title>Alineapp</title>
-  </head>
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">Alineapp</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#Equip">Equip</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#Alineacio">Alineaci&oacute;</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="tests/SpecRunner.html" target="_blank">Tests</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <main>
-      <div id="Equip" class="container">
-        <h1>Equip</h1>
-        <table class="table table-striped table-bordered">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Nom</th>
-              <th scope="col">Atac</th>
-              <th scope="col">Defensa</th>
-              <th scope="col">Assistencia</th>
-              <th scope="col">Actiu</th>
-              <th scope="col">Edita</th>
-              <th scope="col">Borra</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Alex</td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td><input type="checkbox"></td>
-              <td><button class="btn">Edita</button></td>
-              <td><button class="btn">Borra</button></td>
-            </tr>
-            <tr>
-              <td>Alex</td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td><input type="checkbox"></td>
-              <td><button class="btn">Edita</button></td>
-              <td><button class="btn">Borra</button></td>
-            </tr>
-            <tr>
-              <td>Alex</td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td><input type="checkbox"></td>
-              <td><button class="btn">Edita</button></td>
-              <td><button class="btn">Borra</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="container">
-          <h2>Crea nou jugador</h2>
-          <div>
-            <div class="form-group">
-              <label for="nouJugadorNom">Nom</label>
-              <input type="text" class="form-control" id="nouJugadorNom" placeholder="Nom">
-            </div>
-            <div class="form-group">
-              <label for="nouJugadorAtac">Atac</label>
-              <input type="text" class="form-control" id="nouJugadorAtac" placeholder="Atac">
-            </div>
-            <div class="form-group">
-              <label for="nouJugadorDefensa">Defensa</label>
-              <input type="text" class="form-control" id="nouJugadorDefensa" placeholder="Defensa">
-            </div>
-            <div class="form-group">
-              <label for="nouJugadorAssistencia">Assistencia</label>
-              <input type="text" class="form-control" id="nouJugadorAssistencia" placeholder="Assistencia">
-            </div>
-            <button class="btn">Crea</button>
-          </div>
-        </div>
-      </div>
-      <div id="Alineacio" class="container">
-        <h1>Alineaci&oacute;</h1>
-        <table class="table table-striped table-bordered">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Nom</th>
-              <th scope="col">Part 1</th>
-              <th scope="col">Part 2</th>
-              <th scope="col">Part 3</th>
-              <th scope="col">Part 4</th>
-              <th scope="col">Part 5</th>
-              <th scope="col">Part 6</th>
-              <th scope="col">Part 7</th>
-              <th scope="col">Part 8</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Alex</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-            </tr>
-            <tr>
-              <td>Alex</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>No</td>
-              <td>Si</td>
-            </tr>
-            <tr>
-              <td>Alex</td>
-              <td>No</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-              <td>Si</td>
-            </tr>
-          </tbody>
-        </table>
-        <button class="btn">Calcula</button>
-      </div>
-    </main>
+</head>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
+<body>
+
+  <h1>Dungeon Delver</h1>
+
+  <!-- your content here... -->
+  <script src="src/scripts.js"></script>
+</body>
 </html>
