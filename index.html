@@ -1,23 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Dungeon Delver</title>
-  <link rel="icon" href="/favicon.ico">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <title>Dungeon Delver</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-  <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
 
-</head>
+  <body>
+    <h1>Dungeon Delver</h1>
 
-<body>
+    <div>
+      <h2>Room types</h2>
+      <div>
+        <input type="checkbox" id="room_types_trap" checked />
+        <label for="room_types_trap">Trap Room</label>
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          id="room_types_monter"
+          value="monster"
+          checked
+        />
+        <span>Monster Room</span>
+      </div>
+      <div>
+        <input type="checkbox" id="room_types_empty" value="empty" checked />
+        <span>Empty Room</span>
+      </div>
+    </div>
 
-  <h1>Dungeon Delver</h1>
+    <div>
+      <h2>Difficulty level</h2>
+      <div>
+        <span>Min level</span>
+        <select id="min_level">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
 
-  <!-- your content here... -->
-  <script src="src/scripts.js"></script>
-</body>
+      <div>
+        <span>Max level</span>
+        <select id="max_level">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <h2>Number of rooms</h2>
+      <div>
+        <span>Minimum rooms</span>
+        <select id="min_rooms">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+
+      <div>
+        <span>Maximum rooms</span>
+        <select id="max_rooms">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+        </select>
+      </div>
+    </div>
+
+    <h2>Your dungeon</h2>
+    <button type="button" onclick="generate()">Generate</button>
+    <button type="button" onclick="clearGenerated()">Clear</button>
+    <div id="generated_content">
+
+    </div>
+
+    <!-- your content here... -->
+    <script src="js/scripts.js"></script>
+  </body>
 </html>
