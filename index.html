@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Dungeon Delver</title>
+    <title>El último piso</title>
     <!-- <link rel="icon" href="/favicon.ico" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" /> -->
 
@@ -13,12 +13,12 @@
   </head>
 
   <body>
-    <h1>Dungeon Delver</h1>
+    <h1>Generador de mazmorras: El último piso</h1>
 
     <div>
-      <h2>Room types</h2>
+      <h2>Tipo de habitaciones</h2>
       <div>
-        <span>Trap room weight</span>
+        <span>Probabilidad de habitación trampa</span>
         <span id="room_types_trap_text">5</span>
         <input
           type="range"
@@ -30,7 +30,7 @@
         />
       </div>
       <div>
-        <span>Monster room weight</span>
+        <span>Probabilidad de habitación monstruo</span>
         <span id="room_types_monster_text">5</span>
         <input
           type="range"
@@ -42,7 +42,7 @@
         />
       </div>
       <div>
-        <span>Empty room weight</span>
+        <span>Probabilidad de habitación vacía</span>
         <span id="room_types_empty_text">1</span>
         <input
           type="range"
@@ -56,9 +56,9 @@
     </div>
 
     <div>
-      <h2>Difficulty level</h2>
+      <h2>Nivel de dificultad</h2>
       <div>
-        <span>Min level</span>
+        <span>Dificultad mínima</span>
         <span id="min_level_text">1</span>
         <input
           type="range"
@@ -71,7 +71,7 @@
       </div>
 
       <div>
-        <span>Max level</span>
+        <span>Dificultad máxima</span>
         <span id="max_level_text">2</span>
         <input
           type="range"
@@ -85,9 +85,9 @@
     </div>
 
     <div>
-      <h2>Number of rooms</h2>
+      <h2>Número de habitaciones</h2>
       <div>
-        <span>Minimum rooms </span>
+        <span>Número de habitaciones mínima</span>
         <span id="min_rooms_text">5</span>
         <input
           type="range"
@@ -100,7 +100,7 @@
       </div>
 
       <div>
-        <span>Maximum rooms</span>
+        <span>Número de habitaciones máxima</span>
         <span id="max_rooms_text">10</span>
         <input
           type="range"
@@ -113,9 +113,9 @@
       </div>
     </div>
 
-    <h2>Your dungeon</h2>
-    <button type="button" onclick="generate()">Generate</button>
-    <button type="button" onclick="clearGenerated()">Clear</button>
+    <h2>Resultado</h2>
+    <button type="button" onclick="generate()">Generar</button>
+    <button type="button" onclick="clearGenerated()">Borrar</button>
     <div id="generated_content"></div>
 
     <!-- your content here... -->

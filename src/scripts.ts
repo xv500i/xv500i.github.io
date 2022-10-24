@@ -1,7 +1,28 @@
 enum RoomOption {
-  TrapRoom = "TrapRoom",
-  MonsterRoom = "MonsterRoom",
-  EmptyRoom = "EmptyRoom",
+  TrapRoom = "Trampa",
+  MonsterRoom = "Monstruo",
+  EmptyRoom = "Vacía",
+}
+
+class DungeonInfo {
+  rooms: RoomInfo[];
+}
+
+class RectangularShape {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+class RoomInfo extends RectangularShape {
+  label: string;
+  doors: DoorInfo[];
+}
+
+class DoorInfo extends RectangularShape {
+  locked: boolean;
+  opened: boolean;
 }
 
 class Dungeon {
@@ -15,16 +36,16 @@ class Dungeon {
 
   toString(): string {
     let description =
-      `Min level: ${this.minLevel}\n` +
-      `Max level: ${this.maxLevel}\n` +
-      `Min rooms: ${this.minRooms}\n` +
-      `Max rooms: ${this.maxRooms}\n`;
+      `Nivel de dificultad mínimo: ${this.minLevel}\n` +
+      `Nivel de dificultad máximo: ${this.maxLevel}\n` +
+      `Número mínimo de habitaciones: ${this.minRooms}\n` +
+      `Número máximo de habitaciones: ${this.maxRooms}\n`;
 
     this.roomTypes.forEach((element, index) => {
-      description += `${element} rooms weight ${this.roomWeights[index]}\n`;
+      description += `Habitación ${element} con peso ${this.roomWeights[index]}\n`;
     });
 
-    description += "Rooms:\n";
+    description += "Habitaciones:\n";
     for (const room of this.rooms) {
       description += `- ${room.toString()}\n`;
     }
@@ -40,8 +61,8 @@ class Room {
   doors: Door[];
 
   toString(): string {
-    const levelDescription = this.level ? " level " + this.level : "";
-    return `Room ${this.id}: ${this.type} ${levelDescription}`;
+    const levelDescription = this.level ? " dificultad " + this.level : "";
+    return `Habitación ${this.id}: ${this.type} ${levelDescription}`;
   }
 }
 
@@ -50,9 +71,7 @@ class Door {
   to: number;
 }
 
-const trapRoomDescription = "Trap";
-const monsterRoomDescription = "Monster";
-const emptyRoomDescription = "Empty";
+const tileSize = 10;
 
 function generate(): void {
   clearGenerated();
@@ -99,6 +118,7 @@ function generate(): void {
   }
 
   addGeneratedText(dungeon.toString());
+  drawMap(dungeon);
 }
 
 function elementIsChecked(id: string): boolean {
@@ -164,4 +184,80 @@ function weightedRandom<T>(items: Array<T>, weights: Array<number>): T {
   }
 
   return null;
+}
+
+function drawMap(dungeon: Dungeon) {
+  const generatedElement = getGeneratedElement();
+  const canvasElement = document.createElement("canvas");
+  canvasElement.setAttribute("width", "500px");
+  canvasElement.setAttribute("height", "500px");
+  generatedElement.appendChild(canvasElement);
+  const ctx = canvasElement.getContext("2d");
+
+  const canvasWidth = 500;
+  const canvasHeight = 500;
+
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
+
+  for (let index = 0; index < canvasWidth / tileSize; index++) {
+    ctx.strokeStyle = "grey";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(index * tileSize, 0);
+    ctx.lineTo(index * tileSize, canvasHeight);
+    ctx.stroke();
+  }
+  for (let index = 0; index < canvasHeight / tileSize; index++) {
+    ctx.strokeStyle = "grey";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, index * tileSize);
+    ctx.lineTo(canvasWidth, index * tileSize);
+    ctx.stroke();
+  }
+
+  let dungeonInfo = generateDungeonInfo(dungeon);
+
+  dungeonInfo.rooms.forEach((element) => {
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(element.x, element.y, element.w, element.h);
+
+    ctx.lineWidth = 1;
+    ctx.strokeText(element.label, element.x, element.y);
+  });
+}
+
+function generateDungeonInfo(dungeon: Dungeon): DungeonInfo {
+  let dungeonInfo = new DungeonInfo();
+  dungeonInfo.rooms = [];
+
+  let y = 10;
+  const roomMargin = 10;
+  const roomHorizontalLimit = 5;
+  let roomHorizontalIndex = 0;
+
+  for (const element of dungeon.rooms) {
+    let roomInfo = new RoomInfo();
+    roomInfo.label = element.id.toString();
+    roomInfo.x = roomMargin + roomHorizontalIndex * 50 + (roomHorizontalIndex) * roomMargin;
+    roomInfo.y = y;
+
+    const roomXTiles = getRandomInteger(2, 5);
+    const roomYTiles = getRandomInteger(2, 5);
+    roomInfo.w = tileSize * roomXTiles;
+    roomInfo.h = tileSize * roomYTiles;
+
+    dungeonInfo.rooms.push(roomInfo);
+
+    roomHorizontalIndex++;
+    if (roomHorizontalIndex === roomHorizontalLimit) {
+      roomHorizontalIndex = 0;
+      y += 50 + roomMargin;
+    }
+  }
+
+  return dungeonInfo;
 }
