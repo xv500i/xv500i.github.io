@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Dungeon Delver</title>
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" /> -->
 
     <link rel="stylesheet" href="css/app.css" />
   </head>
@@ -18,21 +18,40 @@
     <div>
       <h2>Room types</h2>
       <div>
-        <input type="checkbox" id="room_types_trap" checked />
-        <label for="room_types_trap">Trap Room</label>
-      </div>
-      <div>
+        <span>Trap room weight</span>
+        <span id="room_types_trap_text">5</span>
         <input
-          type="checkbox"
-          id="room_types_monter"
-          value="monster"
-          checked
+          type="range"
+          min="0"
+          max="10"
+          value="5"
+          id="room_types_trap"
+          onchange="updateSliderText(this.id+'_text', this.value)"
         />
-        <span>Monster Room</span>
       </div>
       <div>
-        <input type="checkbox" id="room_types_empty" value="empty" checked />
-        <span>Empty Room</span>
+        <span>Monster room weight</span>
+        <span id="room_types_monster_text">5</span>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value="5"
+          id="room_types_monster"
+          onchange="updateSliderText(this.id+'_text', this.value)"
+        />
+      </div>
+      <div>
+        <span>Empty room weight</span>
+        <span id="room_types_empty_text">1</span>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value="1"
+          id="room_types_empty"
+          onchange="updateSliderText(this.id+'_text', this.value)"
+        />
       </div>
     </div>
 
@@ -40,54 +59,64 @@
       <h2>Difficulty level</h2>
       <div>
         <span>Min level</span>
-        <select id="min_level">
-          <option value="1" selected>1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
+        <span id="min_level_text">1</span>
+        <input
+          type="range"
+          min="1"
+          max="5"
+          value="1"
+          id="min_level"
+          onchange="updateSliderText(this.id+'_text', this.value)"
+        />
       </div>
 
       <div>
         <span>Max level</span>
-        <select id="max_level">
-          <option value="1">1</option>
-          <option value="2" selected>2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
+        <span id="max_level_text">2</span>
+        <input
+          type="range"
+          min="1"
+          max="5"
+          value="2"
+          id="max_level"
+          onchange="updateSliderText(this.id+'_text', this.value)"
+        />
       </div>
     </div>
 
     <div>
       <h2>Number of rooms</h2>
       <div>
-        <span>Minimum rooms</span>
-        <select id="min_rooms">
-          <option value="1" selected>1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
+        <span>Minimum rooms </span>
+        <span id="min_rooms_text">5</span>
+        <input
+          type="range"
+          min="1"
+          max="30"
+          value="5"
+          id="min_rooms"
+          onchange="updateSliderText(this.id+'_text', this.value)"
+        />
       </div>
 
       <div>
         <span>Maximum rooms</span>
-        <select id="max_rooms">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4" selected>4</option>
-        </select>
+        <span id="max_rooms_text">10</span>
+        <input
+          type="range"
+          min="1"
+          max="30"
+          value="10"
+          id="max_rooms"
+          onchange="updateSliderText(this.id+'_text', this.value)"
+        />
       </div>
     </div>
 
     <h2>Your dungeon</h2>
     <button type="button" onclick="generate()">Generate</button>
     <button type="button" onclick="clearGenerated()">Clear</button>
-    <div id="generated_content">
-
-    </div>
+    <div id="generated_content"></div>
 
     <!-- your content here... -->
     <script src="js/scripts.js"></script>
