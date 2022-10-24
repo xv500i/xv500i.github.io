@@ -1,9 +1,33 @@
 var RoomOption;
 (function (RoomOption) {
-    RoomOption[RoomOption["TrapRoom"] = 0] = "TrapRoom";
-    RoomOption[RoomOption["MonsterRoom"] = 1] = "MonsterRoom";
-    RoomOption[RoomOption["EmptyRoom"] = 2] = "EmptyRoom";
+    RoomOption["TrapRoom"] = "TrapRoom";
+    RoomOption["MonsterRoom"] = "MonsterRoom";
+    RoomOption["EmptyRoom"] = "EmptyRoom";
 })(RoomOption || (RoomOption = {}));
+class Dungeon {
+    toString() {
+        let description = `Min level: ${this.minLevel}\n` +
+            `Max level: ${this.maxLevel}\n` +
+            `Min rooms: ${this.minRooms}\n` +
+            `Max rooms: ${this.maxRooms}\n`;
+        this.roomTypes.forEach((element, index) => {
+            description += `${element} rooms weight ${this.roomWeights[index]}\n`;
+        });
+        description += "Rooms:\n";
+        for (const room of this.rooms) {
+            description += `- ${room.toString()}\n`;
+        }
+        return description;
+    }
+}
+class Room {
+    toString() {
+        const levelDescription = this.level ? " level " + this.level : "";
+        return `Room ${this.id}: ${this.type} ${levelDescription}`;
+    }
+}
+class Door {
+}
 const trapRoomDescription = "Trap";
 const monsterRoomDescription = "Monster";
 const emptyRoomDescription = "Empty";
@@ -16,43 +40,36 @@ function generate() {
     const maxLevel = Number(getSelectedOption("max_level"));
     const minRooms = Number(getSelectedOption("min_rooms"));
     const maxRooms = Number(getSelectedOption("max_rooms"));
-    addGeneratedText(`Trap rooms weigth: ${trapRoomsWeight}`);
-    addGeneratedText(`Monster rooms weigth: ${monsterRoomsWeight}`);
-    addGeneratedText(`Empty rooms weigth: ${emptyRoomsWeight}`);
-    addGeneratedText(`Min level: ${minLevel}`);
-    addGeneratedText(`Max level: ${maxLevel}`);
-    addGeneratedText(`Min rooms: ${minRooms}`);
-    addGeneratedText(`Max rooms: ${maxRooms}`);
+    let dungeon = new Dungeon();
+    dungeon.minLevel = minLevel;
+    dungeon.maxLevel = maxLevel;
+    dungeon.maxRooms = maxRooms;
+    dungeon.minRooms = minRooms;
+    dungeon.rooms = [];
+    dungeon.roomTypes = [];
+    dungeon.roomWeights = [];
     const rooms = getRandomInteger(minRooms, maxRooms);
-    addGeneratedText(`Rooms: ${rooms}`);
-    let roomOptions = [
+    dungeon.roomTypes = [
         RoomOption.EmptyRoom,
         RoomOption.MonsterRoom,
         RoomOption.TrapRoom,
     ];
-    let roomOptionsWeights = [
-        emptyRoomsWeight,
-        monsterRoomsWeight,
-        trapRoomsWeight,
-    ];
+    dungeon.roomWeights = [emptyRoomsWeight, monsterRoomsWeight, trapRoomsWeight];
     for (let index = 1; index <= rooms; index++) {
-        let room = weightedRandom(roomOptions, roomOptionsWeights);
-        let roomDescription = "";
-        switch (room) {
+        let room = new Room();
+        room.id = index;
+        room.type = weightedRandom(dungeon.roomTypes, dungeon.roomWeights);
+        switch (room.type) {
             case RoomOption.TrapRoom:
-                roomDescription += trapRoomDescription;
-                roomDescription += ` level ${getRandomInteger(minLevel, maxLevel)}`;
-                break;
             case RoomOption.MonsterRoom:
-                roomDescription += monsterRoomDescription;
-                roomDescription += ` level ${getRandomInteger(minLevel, maxLevel)}`;
+                room.level = getRandomInteger(minLevel, maxLevel);
                 break;
             case RoomOption.EmptyRoom:
-                roomDescription += emptyRoomDescription;
                 break;
         }
-        addGeneratedText(`Room ${index}: ${roomDescription}`);
+        dungeon.rooms.push(room);
     }
+    addGeneratedText(dungeon.toString());
 }
 function elementIsChecked(id) {
     return document.getElementById(id).checked;
@@ -62,9 +79,9 @@ function getSelectedOption(id) {
 }
 function addGeneratedText(text) {
     const generatedElement = getGeneratedElement();
-    const roomTypesTrap = document.createElement("p");
-    roomTypesTrap.textContent = text;
-    generatedElement.appendChild(roomTypesTrap);
+    const codeElement = document.createElement("code");
+    codeElement.innerHTML = text.split("\n").join("<br>");
+    generatedElement.appendChild(codeElement);
 }
 function clearGenerated() {
     const generatedElement = getGeneratedElement();
