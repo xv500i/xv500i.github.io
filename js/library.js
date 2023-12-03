@@ -1,12 +1,13 @@
 const rulesSection = "reglas";
 const armiesSection = "ejercitos";
 const homeSection = "inicio";
+const comunitySection = "comunidad";
 
 function prepare() {
   $(document).ready(() => {
     _hideAllSections();
 
-    [rulesSection, armiesSection, homeSection].forEach((x) => {
+    [rulesSection, armiesSection, homeSection, comunitySection].forEach((x) => {
       $(`#${x}`).click(() => {
         _hideAllSections();
         _showSection(x);
