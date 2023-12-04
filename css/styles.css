@@ -1,3 +1,8 @@
 footer {
   margin-top: 1em;
 }
+
+.specialRule {
+  margin-right: 1em;
+  text-decoration-line: underline;
+}

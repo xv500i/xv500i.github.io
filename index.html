@@ -42,6 +42,9 @@
             <li class="nav-item">
               <a class="nav-link" id="comunidad" href="#">Comunidad</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="listasaof" href="#">Age of Fantasy</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -53,15 +56,9 @@
       <h2>Novedades</h2>
       <div class="container">
         <ul class="list-group">
-          <li class="list-group-item">
-            04-Diciembre-2023: Añadido el manual de reglas de Age of Fantasy
-          </li>
-          <li class="list-group-item">
-            03-Diciembre-2023: Añadida la sección de comunidad
-          </li>
-          <li class="list-group-item">
-            02-Diciembre-2023: Reglas Básicas de Age of Fantasy
-          </li>
+          <li class="list-group-item">04-Diciembre-2023: Añadido el manual de reglas de Age of Fantasy</li>
+          <li class="list-group-item">03-Diciembre-2023: Añadida la sección de comunidad</li>
+          <li class="list-group-item">02-Diciembre-2023: Reglas Básicas de Age of Fantasy</li>
         </ul>
         <h3></h3>
         <p></p>
@@ -71,9 +68,7 @@
       <div class="container">
         <ul class="list-group">
           <li class="list-group-item">Manual de Age of Fantasy</li>
-          <li class="list-group-item">
-            Creador de ejércitos de Age of Fantasy
-          </li>
+          <li class="list-group-item">Creador de ejércitos de Age of Fantasy</li>
         </ul>
       </div>
     </div>
@@ -82,20 +77,17 @@
       <h1 class="text-center">Reglas</h1>
       <ul class="list-group">
         <li class="list-group-item">
-          <a
-            href="https://docs.google.com/document/d/1iE9uKaxEMzajSfiI8KcTsThXF8gjFaIO8iCUwXUfVU8/edit?usp=sharing"
+          <a href="https://docs.google.com/document/d/1iE9uKaxEMzajSfiI8KcTsThXF8gjFaIO8iCUwXUfVU8/edit?usp=sharing"
             >Age of Fantasy Reglas Rápidas</a
           >
         </li>
         <li class="list-group-item">
-          <a
-            href="https://docs.google.com/document/d/1zRcRceZ3P_a_LIpaoodczVQxkMZ8g6vuEHbERB3u4PU/edit?usp=sharing"
+          <a href="https://docs.google.com/document/d/1zRcRceZ3P_a_LIpaoodczVQxkMZ8g6vuEHbERB3u4PU/edit?usp=sharing"
             >Age of Fantasy Reglas Rápidas para pantallas pequeñas</a
           >
         </li>
         <li class="list-group-item">
-          <a
-            href="https://docs.google.com/document/d/1drsxiAuTlg0icMugRqGs-6ZT2WCnPxfs-DFCGIF2RVA/edit?usp=sharing"
+          <a href="https://docs.google.com/document/d/1drsxiAuTlg0icMugRqGs-6ZT2WCnPxfs-DFCGIF2RVA/edit?usp=sharing"
             >Age of Fantasy Manual de Reglas</a
           >
         </li>
@@ -106,19 +98,31 @@
       <h1 class="text-center">Comunidad</h1>
       <ul class="list-group">
         <li class="list-group-item">
-          UnDeDiez: Tienda de wargames, rol, juegos de mesa, juegos de cartas
-          coleccionables, cómics y mucho más.
+          UnDeDiez: Tienda de wargames, rol, juegos de mesa, juegos de cartas coleccionables, cómics y mucho más.
           <a href="https://www.facebook.com/Undediez/">Facebook</a>
           <a href="https://www.instagram.com/undediez/">Instagram</a>
         </li>
         <li class="list-group-item">
           OnePageRules
-          <a
-            href="https://discord.gg/djBydgk?utm_source=website&utm_medium=organic"
-            >Discord</a
-          >
+          <a href="https://discord.gg/djBydgk?utm_source=website&utm_medium=organic">Discord</a>
         </li>
       </ul>
+    </div>
+
+    <div style="display: none" class="container" id="section-listasaof">
+      <h1 class="text-center">Listas de Ejércitos de Age Of Fantasy</h1>
+
+      <div class="dropdown">
+        <button id="aofArmyButton" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Ejército
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Imperio Humano</a></li>
+          <li><a class="dropdown-item" href="#">Elfos del bosque</a></li>
+        </ul>
+      </div>
+
+      <div class="container" id="armyListContainer"></div>
     </div>
 
     <div style="display: none" class="container" id="section-ejercitos">
@@ -130,10 +134,7 @@
       </div>
     </div>
 
-    <footer
-      class="text-center text-muted"
-      style="background-color: rgba(0, 0, 0, 0.05)"
-    >
+    <footer class="text-center text-muted" style="background-color: rgba(0, 0, 0, 0.05)">
       <div class="p-4">
         Material traducido de
         <a href="https://www.onepagerules.com/">One Page Rules</a>
