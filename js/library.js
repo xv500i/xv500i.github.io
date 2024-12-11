@@ -154,21 +154,62 @@ function generateId(x) {
   return x.replace(" ", "_");
 }
 
-function prepareNameFilter(filter) {
-  filter.append($("<h3>").append("Filtro por nombre"));
+function buildAccordeonItem(accordionId, contentId, headerText, content) {
+  const accordionContentId = contentId;
+  const idHeader = contentId + "-header";
+  const accordionContent = $("<div>", {
+    id: accordionContentId,
+    class: "accordion-collapse collapse",
+    "aria-labelledby": idHeader,
+    "data-bs-parent": `#${accordionId}`,
+  });
+  const accordionItem = $("<div>").addClass("accordion-item");
+  accordionItem.append(
+    $("<h2>", { id: idHeader, class: "accordion-header" }).append(
+      $("<button>", {
+        class: "accordion-button collapsed",
+        type: "button",
+        "data-bs-toggle": "collapse",
+        "data-bs-target": `#${accordionContentId}`,
+        "aria-expanded": "false",
+        "aria-controls": accordionContentId,
+      }).append(headerText)
+    )
+  );
+
+  accordionItem.append(accordionContent);
+
+  const accordionBody = $("<div>", {
+    class: "accordion-body",
+  });
+  accordionContent.append(accordionBody);
+
+  accordionBody.append(content);
+  return accordionItem;
+}
+
+function prepareNameFilter(accordion) {
   const nameFilter = $("<div>");
 
   bestiaryData.forEach((x) => {
+    const checkboxDiv = $("<div>")
+      .addClass("form-check")
+      .addClass("form-check-inline");
+
+    const checkboxId = generateId(x.nombre);
+    const customNameMetadata = "data-l-name";
     const checkbox = $("<input>")
       .attr({
         type: "checkbox",
-        name: x.nombre,
-        id: generateId(x.nombre),
+        name: checkboxId,
+        id: checkboxId,
+        class: "form-check-input",
       })
+      .data(customNameMetadata, x.nombre)
       .prop("checked", true)
       .change(function () {
         const element = $(this);
-        const name = element.attr("name");
+        const name = element.data(customNameMetadata);
         if (element.is(":checked")) {
           selectedNames.push(name);
         } else {
@@ -177,14 +218,16 @@ function prepareNameFilter(filter) {
         applyFilter();
       });
     const label = $("<label>")
-      .attr({ for: x.nombre })
+      .attr({ for: checkboxId, class: "form-check-label" })
       .append(x.nombre.toUpperCase());
-    nameFilter.append(checkbox);
-    nameFilter.append(label);
+    checkboxDiv.append(checkbox);
+    checkboxDiv.append(label);
+    nameFilter.append(checkboxDiv);
     selectedNames.push(x.nombre);
   });
 
   const resetButton = $("<button>")
+    .attr({ type: "button", class: "btn btn-danger" })
     .text("Reset")
     .on("click", function () {
       while (selectedNames.length > 0) {
@@ -198,9 +241,17 @@ function prepareNameFilter(filter) {
 
       applyFilter();
     });
-  nameFilter.append(resetButton);
+  const buttonDiv = $("<div>", {}).append(resetButton);
+  nameFilter.append(buttonDiv);
 
-  filter.append(nameFilter);
+  const accordionItem = buildAccordeonItem(
+    accordion.attr("id"),
+    "accordion-name-filter",
+    "Filtro por nombre",
+    nameFilter
+  );
+
+  accordion.append(accordionItem);
 }
 
 function applyFilter() {
@@ -220,36 +271,48 @@ function applyFilter() {
   });
 }
 
-function prepareFreeNameFilter(filter) {
-  filter.append($("<h3>").append("Filtro por búsqueda"));
+function prepareFreeNameFilter(accordion) {
   const filterDiv = $("<div>");
   const searchByNameId = "search_by_name";
   const input = $("<input>")
     .attr({
       type: "text",
       id: searchByNameId,
+      name: searchByNameId,
+      class: "form-control",
     })
     .on("input", function () {
       const element = $(this);
       searchTerm = element.val().toLowerCase();
       applyFilter();
     });
-
-  filterDiv.append(input);
+  const label = $("<label>", { for: searchByNameId }).append("Término");
+  const terminoDiv = $("<div>", { class: "form-floating mb-3" })
+    .append(input)
+    .append(label);
+  filterDiv.append(terminoDiv);
   const resetButton = $("<button>")
+    .attr({ type: "button", class: "btn btn-danger" })
     .text("Reset")
     .on("click", function () {
       $(`#${searchByNameId}`).val("");
       searchTerm = "";
       applyFilter();
     });
-  filterDiv.append(resetButton);
+  const buttonDiv = $("<div>", {}).append(resetButton);
+  filterDiv.append(buttonDiv);
 
-  filter.append(filterDiv);
+  const accordionItem = buildAccordeonItem(
+    accordion.attr("id"),
+    "accordion-search-filter",
+    "Filtro por búsqueda",
+    filterDiv
+  );
+
+  accordion.append(accordionItem);
 }
 
-function prepareLevelFilter(filter) {
-  filter.append($("<h3>").append("Filtro por nivel"));
+function prepareLevelFilter(accordion) {
   const filterDiv = $("<div>");
   const maxLevel = 20;
   for (let i = 1; i <= maxLevel; i++) {
@@ -258,6 +321,7 @@ function prepareLevelFilter(filter) {
         type: "checkbox",
         name: i,
         id: i,
+        class: "form-check-input",
       })
       .prop("checked", true)
       .change(function () {
@@ -270,12 +334,20 @@ function prepareLevelFilter(filter) {
         }
         applyFilter();
       });
-    const label = $("<label>").attr({ for: i }).append(i);
-    filterDiv.append(checkbox);
-    filterDiv.append(label);
+    const label = $("<label>")
+      .attr({ for: i, class: "form-check-label" })
+      .append(i);
+    const checkboxDiv = $("<div>")
+      .addClass("form-check")
+      .addClass("form-check-inline");
+
+    checkboxDiv.append(checkbox);
+    checkboxDiv.append(label);
+    filterDiv.append(checkboxDiv);
     selectedLevels.push(i);
   }
   const resetButton = $("<button>")
+    .attr({ type: "button", class: "btn btn-danger" })
     .text("Reset")
     .on("click", function () {
       while (selectedLevels.length > 0) {
@@ -288,9 +360,17 @@ function prepareLevelFilter(filter) {
 
       applyFilter();
     });
-  filterDiv.append(resetButton);
+  const buttonDiv = $("<div>", {}).append(resetButton);
+  filterDiv.append(buttonDiv);
 
-  filter.append(filterDiv);
+  const accordionItem = buildAccordeonItem(
+    accordion.attr("id"),
+    "accordion-level-filter",
+    "Filtro por nivel",
+    filterDiv
+  );
+
+  accordion.append(accordionItem);
 }
 
 let selectedLevels = [];
@@ -298,19 +378,19 @@ let selectedNames = [];
 let searchTerm = "";
 
 function onReady() {
+  const accordionFilterId = "accordion-filter";
   const placeholder = $("#placeholder");
 
-  const filter = $("<div>");
-  filter.addClass("hide_print");
-  prepareNameFilter(filter);
-  prepareLevelFilter(filter);
-  prepareFreeNameFilter(filter);
-  filter.accordion({
-    collapsible: true,
-    active: false,
-    heightStyle: "fill",
-  });
-  placeholder.append(filter);
+  const accordionFilter = $("<div>")
+    .addClass("hide_print")
+    .addClass("accordion")
+    .attr("id", accordionFilterId);
+
+  prepareNameFilter(accordionFilter);
+  prepareLevelFilter(accordionFilter);
+  prepareFreeNameFilter(accordionFilter);
+
+  placeholder.append(accordionFilter);
 
   bestiaryData.forEach((element) => {
     const comentario_ca = element.comentario_ca
