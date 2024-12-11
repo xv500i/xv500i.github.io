@@ -155,8 +155,8 @@ function generateId(x) {
 }
 
 function prepareNameFilter(filter) {
+  filter.append($("<h3>").append("Filtro por nombre"));
   const nameFilter = $("<div>");
-  nameFilter.append($("<h3>").append("Por nombre"));
 
   bestiaryData.forEach((x) => {
     const checkbox = $("<input>")
@@ -183,6 +183,23 @@ function prepareNameFilter(filter) {
     nameFilter.append(label);
     selectedNames.push(x.nombre);
   });
+
+  const resetButton = $("<button>")
+    .text("Reset")
+    .on("click", function () {
+      while (selectedNames.length > 0) {
+        selectedNames.pop();
+      }
+      for (let i of bestiaryData) {
+        const id = generateId(i.nombre);
+        $(`#${id}`).prop("checked", true);
+        selectedNames.push(i.nombre);
+      }
+
+      applyFilter();
+    });
+  nameFilter.append(resetButton);
+
   filter.append(nameFilter);
 }
 
@@ -204,12 +221,13 @@ function applyFilter() {
 }
 
 function prepareFreeNameFilter(filter) {
+  filter.append($("<h3>").append("Filtro por búsqueda"));
   const filterDiv = $("<div>");
-  filterDiv.append($("<h3>").append("Por búsqueda de nombre"));
+  const searchByNameId = "search_by_name";
   const input = $("<input>")
     .attr({
       type: "text",
-      id: "search_by_name",
+      id: searchByNameId,
     })
     .on("input", function () {
       const element = $(this);
@@ -218,14 +236,23 @@ function prepareFreeNameFilter(filter) {
     });
 
   filterDiv.append(input);
+  const resetButton = $("<button>")
+    .text("Reset")
+    .on("click", function () {
+      $(`#${searchByNameId}`).val("");
+      searchTerm = "";
+      applyFilter();
+    });
+  filterDiv.append(resetButton);
 
   filter.append(filterDiv);
 }
 
 function prepareLevelFilter(filter) {
+  filter.append($("<h3>").append("Filtro por nivel"));
   const filterDiv = $("<div>");
-  filterDiv.append($("<h3>").append("Por nivel"));
-  for (let i = 1; i <= 20; i++) {
+  const maxLevel = 20;
+  for (let i = 1; i <= maxLevel; i++) {
     const checkbox = $("<input>")
       .attr({
         type: "checkbox",
@@ -248,6 +275,21 @@ function prepareLevelFilter(filter) {
     filterDiv.append(label);
     selectedLevels.push(i);
   }
+  const resetButton = $("<button>")
+    .text("Reset")
+    .on("click", function () {
+      while (selectedLevels.length > 0) {
+        selectedLevels.pop();
+      }
+      for (let i = 1; i <= maxLevel; i++) {
+        $(`#${i}`).prop("checked", true);
+        selectedLevels.push(i);
+      }
+
+      applyFilter();
+    });
+  filterDiv.append(resetButton);
+
   filter.append(filterDiv);
 }
 
@@ -260,10 +302,14 @@ function onReady() {
 
   const filter = $("<div>");
   filter.addClass("hide_print");
-  filter.append($("<h2>").append("Filtro"));
   prepareNameFilter(filter);
   prepareLevelFilter(filter);
   prepareFreeNameFilter(filter);
+  filter.accordion({
+    collapsible: true,
+    active: false,
+    heightStyle: "fill",
+  });
   placeholder.append(filter);
 
   bestiaryData.forEach((element) => {
