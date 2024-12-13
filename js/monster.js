@@ -76,8 +76,6 @@ function _buildSalvationBlock(monsterData) {
 function _buildMonsterDescription(monsterData) {
   const descriptionDiv = $("<div>", { class: "clearfix" });
 
-  const descriptionDiv = $("<div>", { class: "clearfix" });
-
   if (monsterData.imagen) {
     descriptionDiv.append(
       $("<img>", {
@@ -86,11 +84,6 @@ function _buildMonsterDescription(monsterData) {
       })
     );
   }
-
-  const paragraphs = monsterData.descripcion.map((x) =>
-    $("<p>", { class: "long-text" }).append($("<i>").append(x))
-  );
-  descriptionDiv.append(paragraphs);
 
   const paragraphs = monsterData.descripcion.map((x) =>
     $("<p>", { class: "long-text" }).append($("<i>").append(x))
