@@ -78,16 +78,6 @@ p.long-text {
   margin: 0.5em 0.5em;
 }
 
-img.monster-picture {
-  max-width: 100%;
-}
-
-.grid2 {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  padding: 5px;
-}
-
 @media print {
   .hide_print {
     display: none;
