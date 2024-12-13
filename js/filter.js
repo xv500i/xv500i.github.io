@@ -190,7 +190,7 @@ function _applyFilter() {
     const monster = bestiaryData.find((x) => x.nombre === id);
     if (
       selectedNames.includes(monster.nombre) &&
-      selectedLevels.includes(monster.niv) &&
+      selectedLevels.includes(monster.desafio) &&
       (searchTerm === "" || monster.nombre.toLowerCase().includes(searchTerm))
     ) {
       element.show();
