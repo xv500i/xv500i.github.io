@@ -1,15 +1,79 @@
+h1 {
+  color: #922610;
+  font-family: "Libre Baskerville", "Lora", "Calisto MT", "Bookman Old Style",
+    "Bookman", "Goudy Old Style", Garamond, "Hoefler Text", "Bitstream Charter",
+    Georgia, serif;
+  font-size: 21px;
+  line-height: 1.2em;
+  margin: 0.2em 0.5em;
+  letter-spacing: 1px;
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
 body {
-    font-family: "Montserrat", "sans serif";
-  }
+  font-family: "Noto Sans", "Myriad Pro", Calibri, Helvetica, Arial, sans-serif;
+}
 
-  h1 {
-    background-color: black;
-    color: white;
-    padding: 0.2em;
-  }
+button.accordion-button {
+  color: white;
+  background-color: #922610;
+  font-family: "Libre Baskerville", "Lora", "Calisto MT", "Bookman Old Style",
+    "Bookman", "Goudy Old Style", Garamond, "Hoefler Text", "Bitstream Charter",
+    Georgia, serif;
+}
 
-  @media print {
-    .hide_print {
-      display: none;
-    }
+button.accordion-button:not(.collapsed) {
+  color: #922610;
+  background-color: white;
+}
+
+h3.actions {
+  color: #7a200d;
+  font-size: 21px;
+  font-variant: small-caps;
+  font-weight: normal;
+  margin: 0.5em 0.5em 0em 0.5em;
+}
+
+.monster-block {
+  background-size: cover;
+  background-position: center;
+  background-image: url(../img/statblockparch.jpg);
+  box-shadow: 0rem 0rem 1.5rem #867453;
+  margin: 0.3em;
+}
+
+.monster-block p {
+  margin: 0 0.5em;
+}
+
+.colored-text {
+  color: #922610;
+}
+
+.colored-text b {
+  color: #7c200e;
+}
+
+hr.monster-block-bar {
+  background-size: cover;
+  background-position: center;
+  background: #e69a28;
+  background-image: url(../img/statblockbar.jpg);
+  border: 1px solid #000;
+  padding: 0 10px 0;
+  opacity: 1;
+}
+
+hr.rule {
+  background: #7a200d;
+  opacity: 1;
+  margin: 0.5em 0.5em;
+}
+
+@media print {
+  .hide_print {
+    display: none;
   }
+}

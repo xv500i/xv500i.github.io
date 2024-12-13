@@ -5,7 +5,10 @@ const bestiaryData = [
     ca: 12,
     pg: 4,
     mov: "cerca",
-    ata: ["1 maza (cerca): +1 (1d6) o 1 hechizo"],
+    ata: [
+      { name: "1 maza (cerca)", description: "+1 (1d6) o 1 hechizo" },
+      { name: "1 hechizo" },
+    ],
     fue: 1,
     des: -1,
     con: +0,
@@ -28,7 +31,7 @@ const bestiaryData = [
     ca: 16,
     pg: 39,
     mov: "cerca (nadar)",
-    ata: ["2 tentáculo (cerca): +5 (1d8 + maldición)"],
+    ata: [{ name: "2 tentáculo (cerca)", description: "+5 (1d8 + maldición)" }],
     fue: 4,
     des: -1,
     con: +3,
@@ -61,7 +64,7 @@ const bestiaryData = [
     ca: 15,
     pg: 11,
     mov: "cerca",
-    ata: ["espada larga (cerca): +3 (1d8)"],
+    ata: [{ name: "espada larga (cerca)", description: "+3 (1d8)" }],
     fue: 3,
     des: -1,
     con: +2,
@@ -85,7 +88,10 @@ const bestiaryData = [
     comentario_ca: "escudo y armadura de cuero",
     pg: 4,
     mov: "cerca",
-    ata: ["porra (cerca): +1 (1d4)", "arco corto (lejos): +0 (1d4)"],
+    ata: [
+      { name: "porra (cerca)", description: "+1 (1d4)" },
+      { name: "arco corto (cerca)", description: "+0 (1d4)" },
+    ],
     fue: 1,
     des: 0,
     con: +0,
@@ -109,7 +115,7 @@ const bestiaryData = [
     ca: 12,
     pg: 9,
     mov: "cerca",
-    ata: ["mordisco (cerca): +2 (1d6)"],
+    ata: [{ name: "mordisco (cerca)", description: "+2 (1d6)" }],
     fue: -1,
     des: +2,
     con: +0,
@@ -126,7 +132,7 @@ const bestiaryData = [
     ca: 13,
     pg: 25,
     mov: "cerca (escalar)",
-    ata: ["2 garras (cerca): +4 (1d8)"],
+    ata: [{ name: "2 garras (cerca)", description: "+4 (1d8)" }],
     fue: +4,
     des: +1,
     con: +3,
@@ -144,6 +150,10 @@ const bestiaryData = [
     ],
   },
 ];
+
+let selectedLevels = [];
+let selectedNames = [];
+let searchTerm = "";
 
 function fNumber(x) {
   if (x >= 0) return "+" + x;
@@ -373,9 +383,85 @@ function prepareLevelFilter(accordion) {
   accordion.append(accordionItem);
 }
 
-let selectedLevels = [];
-let selectedNames = [];
-let searchTerm = "";
+function prepareMonsters(placeholder) {
+  bestiaryData.forEach((element) => {
+    const monster = buildMonsterUI(element);
+    placeholder.append(monster);
+  });
+}
+
+function buildMonsterUI(element) {
+  const comentario_ca = element.comentario_ca
+    ? " (" + element.comentario_ca + ")"
+    : "";
+  const monster = $("<div>")
+    .attr({
+      id: "m_" + generateId(element.nombre),
+      data_name: element.nombre,
+    })
+    .addClass("monster-block")
+    .append(buildHorizontalLineScroll())
+    .append($("<h1>").append(element.nombre.toUpperCase()))
+    .append($("<p>").append($("<i>").append(element.descripcion)))
+    .append(buildHr())
+    .append(
+      $("<p>", { class: "colored-text" }).append(
+        `<b>CA</b> ${element.ca}${comentario_ca}, <b>PG</b> ${element.pg}, <b>Mov</b> ${element.mov}`
+      )
+    );
+  monster.append(
+    $("<p>", { class: "colored-text" }).append(
+      `<b>Fue</b> ${fNumber(element.fue)}, <b>Des</b> ${fNumber(
+        element.des
+      )}, <b>Con</b> ${fNumber(element.con)}, <b>Int</b> ${fNumber(
+        element.int
+      )}, <b>Sab</b> ${fNumber(element.sab)}, <b>Car</b> ${fNumber(
+        element.car
+      )}`
+    )
+  );
+  monster.append(
+    $("<p>", { class: "colored-text" }).append(
+      `<b>Al</b> ${element.alineamiento}, <b>Niv</b> ${element.niv}`
+    )
+  );
+
+  if (element.entradas.length > 0) {
+    monster.append(buildH3("Características"));
+    monster.append(buildHr());
+  }
+  element.entradas.forEach((x) => {
+    monster.append(
+      $("<p>").append(`<b><i>${x.nombre}</i></b>. ${x.descripcion}`)
+    );
+  });
+
+  if (element.ata.length > 0) {
+    monster.append(buildH3("Acciones"));
+    monster.append(buildHr());
+  }
+
+  element.ata.forEach((x) => {
+    monster.append(
+      $("<p>").append(`<b><i>${x.name}</i></b>. ${x.description ?? ""}`)
+    );
+  });
+
+  monster.append(buildHorizontalLineScroll());
+  return monster;
+}
+
+function buildHorizontalLineScroll() {
+  return $("<hr>", { class: "monster-block-bar", size: "10px" });
+}
+
+function buildHr() {
+  return $("<hr>", { size: "5px", class: "rule" });
+}
+
+function buildH3(content) {
+  return $("<h3>", { class: "actions" }).append(content);
+}
 
 function onReady() {
   const accordionFilterId = "accordion-filter";
@@ -392,44 +478,5 @@ function onReady() {
 
   placeholder.append(accordionFilter);
 
-  bestiaryData.forEach((element) => {
-    const comentario_ca = element.comentario_ca
-      ? " (" + element.comentario_ca + ")"
-      : "";
-    const monster = $("<div>")
-      .attr({
-        id: "m_" + generateId(element.nombre),
-        data_name: element.nombre,
-      })
-      .append($("<h1>").append(element.nombre.toUpperCase()))
-      .append($("<p>").append($("<i>").append(element.descripcion)))
-      .append(
-        $("<p>").append(
-          `<b>CA</b> ${element.ca}${comentario_ca}, <b>PG</b> ${element.pg}, <b>Mov</b> ${element.mov}`
-        )
-      );
-    element.ata.forEach((x) => {
-      monster.append($("<p>").append(`<b>Ata</b> ${x}`));
-    });
-    monster.append(
-      $("<p>").append(
-        `<b>Fue</b> ${fNumber(element.fue)}, <b>Des</b> ${fNumber(
-          element.des
-        )}, <b>Con</b> ${fNumber(element.con)}, <b>Int</b> ${fNumber(
-          element.int
-        )}, <b>Sab</b> ${fNumber(element.sab)}, <b>Car</b> ${fNumber(
-          element.car
-        )}`
-      )
-    );
-    monster.append(
-      $("<p>").append(
-        `<b>Al</b> ${element.alineamiento}, <b>Niv</b> ${element.niv}`
-      )
-    );
-    element.entradas.forEach((x) => {
-      monster.append($("<p>").append(`<b>${x.nombre}</b>: ${x.descripcion}`));
-    });
-    placeholder.append(monster);
-  });
+  prepareMonsters(placeholder);
 }
