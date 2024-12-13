@@ -8,16 +8,13 @@ function _generateId(x) {
 }
 
 function prepareMonsters(placeholder, monsters) {
-  monsters.forEach((element) => {
-    const monster = _buildMonsterUI(element);
-    placeholder.append(monster);
+  monsters.forEach((monsterData) => {
+    const monsterUi = _buildMonsterUI(monsterData);
+    placeholder.append(monsterUi);
   });
 }
 
 function _buildMonsterUI(monsterData) {
-  const comentario_ca = monsterData.comentario_ca
-    ? " (" + monsterData.comentario_ca + ")"
-    : "";
   const monsterDiv = $("<div>")
     .attr({
       id: "m_" + _generateId(monsterData.nombre),
@@ -26,19 +23,38 @@ function _buildMonsterUI(monsterData) {
     .addClass("monster-block")
     .append(_buildHorizontalLineScroll())
     .append($("<h1>").append(monsterData.nombre.toUpperCase()))
-    .append($("<p>").append($("<i>").append(monsterData.descripcion)))
+    .append(_buildMonsterDescription(monsterData))
     .append(_buildHr())
     .append(
+      $("<p>", { class: "colored-text" }).append(`<b>CA</b> ${monsterData.ca}`)
+    )
+    .append(
+      $("<p>", { class: "colored-text" }).append(`<b>PG</b> ${monsterData.pg}`)
+    )
+    .append(
       $("<p>", { class: "colored-text" }).append(
-        `<b>CA</b> ${monsterData.ca}${comentario_ca}, <b>PG</b> ${monsterData.pg}, <b>Mov</b> ${monsterData.mov}`
+        `<b>Velocidad</b> ${monsterData.velocidad}`
+      )
+    )
+    .append(_buildHr())
+    .append(_buildMonsterStatBlock(monsterData))
+    .append(_buildHr())
+    .append(_buildSalvationBlock(monsterData))
+    .append(
+      $("<p>", { class: "colored-text" }).append(
+        `<b>Habilidades</b> ${monsterData.habilidades}`
+      )
+    )
+    .append(
+      $("<p>", { class: "colored-text" }).append(
+        `<b>Idiomas</b> ${monsterData.idiomas}`
+      )
+    )
+    .append(
+      $("<p>", { class: "colored-text" }).append(
+        `<b>Desafío</b> ${monsterData.desafio}`
       )
     );
-  monsterDiv.append(_buildMonsterStatBlock(monsterData));
-  monsterDiv.append(
-    $("<p>", { class: "colored-text" }).append(
-      `<b>Al</b> ${monsterData.alineamiento}, <b>Niv</b> ${monsterData.niv}`
-    )
-  );
 
   _appendEntries(monsterData, monsterDiv);
   _appendActions(monsterData, monsterDiv);
@@ -47,27 +63,57 @@ function _buildMonsterUI(monsterData) {
   return monsterDiv;
 }
 
+function _buildSalvationBlock(monsterData) {
+  return $("<p>", { class: "colored-text" }).append(
+    `<b>Salvaciones</b> Con ${_fNumber(
+      monsterData.salvacionCon
+    )}, Ref ${_fNumber(monsterData.salvacionRef)}, Vol ${_fNumber(
+      monsterData.salvacionVol
+    )}`
+  );
+}
+
+function _buildMonsterDescription(monsterData) {
+  const paragraphs = monsterData.descripcion.map((x) =>
+    $("<p>", { class: "long-text" }).append($("<i>").append(x))
+  );
+  const paragraphsDiv = $("<div>").append(paragraphs);
+  const descriptionDiv = $("<div>").append(paragraphsDiv);
+  if (monsterData.imagen) {
+    descriptionDiv.addClass("grid2");
+    descriptionDiv.append(
+      $("<img>", { class: "monster-picture", src: monsterData.imagen })
+    );
+  }
+
+  return descriptionDiv;
+}
+
 function _appendActions(monsterData, parent) {
-  if (monsterData.ata.length > 0) {
+  if (monsterData.acciones.length > 0) {
     parent.append(_buildH3("Acciones"));
     parent.append(_buildHr());
   }
 
-  monsterData.ata.forEach((x) => {
+  monsterData.acciones.forEach((x) => {
     parent.append(
-      $("<p>").append(`<b><i>${x.name}</i></b>. ${x.description ?? ""}`)
+      $("<p>", { class: "long-text" }).append(
+        `<b><i>${x.nombre}</i></b>. ${x.descripcion ?? ""}`
+      )
     );
   });
 }
 
 function _appendEntries(monsterData, parent) {
-  if (monsterData.entradas.length > 0) {
-    parent.append(_buildH3("Características"));
+  if (monsterData.rasgos.length > 0) {
+    parent.append(_buildH3("Rasgos"));
     parent.append(_buildHr());
   }
-  monsterData.entradas.forEach((x) => {
+  monsterData.rasgos.forEach((x) => {
     parent.append(
-      $("<p>").append(`<b><i>${x.nombre}</i></b>. ${x.descripcion}`)
+      $("<p>", { class: "long-text" }).append(
+        `<b><i>${x.nombre}</i></b>. ${x.descripcion}`
+      )
     );
   });
 }
