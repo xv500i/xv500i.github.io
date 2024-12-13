@@ -67,6 +67,10 @@ hr.monster-block-bar {
   opacity: 1;
 }
 
+img.monster-image {
+  max-width: 100%;
+}
+
 hr.rule {
   background: #7a200d;
   opacity: 1;
@@ -76,16 +80,6 @@ hr.rule {
 p.long-text {
   line-height: 1.1;
   margin: 0.5em 0.5em;
-}
-
-img.monster-picture {
-  max-width: 100%;
-}
-
-.grid2 {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  padding: 5px;
 }
 
 @media print {

@@ -74,17 +74,21 @@ function _buildSalvationBlock(monsterData) {
 }
 
 function _buildMonsterDescription(monsterData) {
+  const descriptionDiv = $("<div>", { class: "clearfix" });
+
+  if (monsterData.imagen) {
+    descriptionDiv.append(
+      $("<img>", {
+        class: "col-md-6 float-md-end mb-3 ms-md-3 monster-image",
+        src: monsterData.imagen,
+      })
+    );
+  }
+
   const paragraphs = monsterData.descripcion.map((x) =>
     $("<p>", { class: "long-text" }).append($("<i>").append(x))
   );
-  const paragraphsDiv = $("<div>").append(paragraphs);
-  const descriptionDiv = $("<div>").append(paragraphsDiv);
-  if (monsterData.imagen) {
-    descriptionDiv.addClass("grid2");
-    descriptionDiv.append(
-      $("<img>", { class: "monster-picture", src: monsterData.imagen })
-    );
-  }
+  descriptionDiv.append(paragraphs);
 
   return descriptionDiv;
 }
