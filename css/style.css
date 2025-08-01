@@ -1,11 +1,11 @@
 body {
-  font-size: 30px;
   margin: 0;
   padding: 0;
 }
 
-button {
-  font-size: 30px;
+#font-container {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 #calculator-screen {

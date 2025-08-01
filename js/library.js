@@ -7,6 +7,29 @@ var sandWitchKey = $("#keys-sandwitch");
 var sandWitchAmount = 0;
 var total = 0;
 
+var uiFontSize = 30;
+try {
+  var savedUiFontSize = localStorage.getItem("font-size");
+  if (savedUiFontSize) {
+    uiFontSize = parseInt(savedUiFontSize);
+  }
+} catch {}
+
+$("#ui-font-slider").val(uiFontSize);
+
+updateFontSize();
+
+function setFont(value) {
+  uiFontSize = value;
+  localStorage.setItem("font-size", value);
+  updateFontSize();
+}
+
+function updateFontSize() {
+  $("button").css("font-size", uiFontSize + "px");
+  $("span").css("font-size", uiFontSize + "px");
+}
+
 function addItem(name) {
   switch (name) {
     case "water":

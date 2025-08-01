@@ -15,19 +15,36 @@
         <div><span id="total">0€</span></div>
       </div>
       <div id="calculator-keys" class="grid-container">
-        <button id="keys-c" onclick="reset()"><span>Borrar</span></button>
-        <button id="keys-water" onclick="addItem('water')">
+        <button type="button" id="keys-c" onclick="reset()">
+          <span>Borrar</span>
+        </button>
+        <button type="button" id="keys-water" onclick="addItem('water')">
           <span class="amount">0</span> x Agua
         </button>
-        <button id="keys-soda" onclick="addItem('soda')">
+        <button type="button" id="keys-soda" onclick="addItem('soda')">
           <span class="amount">0</span> x Refresco
         </button>
-        <button id="keys-sandwitch" onclick="addItem('sandWitch')">
+        <button
+          type="button"
+          id="keys-sandwitch"
+          onclick="addItem('sandWitch')"
+        >
           <span class="amount">0</span> x Bocadillo
         </button>
       </div>
     </div>
-
+    <div id="font-container">
+      <span>Tamaño letra</span>
+      <input
+        title="tamaño fuente"
+        id="ui-font-slider"
+        type="range"
+        step="1"
+        min="10"
+        max="40"
+        onchange="setFont(this.value)"
+      />
+    </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="js/library.js"></script>
   </body>
