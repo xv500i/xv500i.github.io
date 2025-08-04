@@ -81,7 +81,7 @@ function reset() {
 }
 
 function updateUI() {
-  totalSpan.text(total + "€");
+  totalSpan.text(total + " €");
 
   for (var k in items) {
     updateKeyText(k);
