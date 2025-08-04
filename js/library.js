@@ -1,11 +1,18 @@
 var totalSpan = $("#total");
-var waterKey = $("#keys-water");
-var waterAmount = 0;
-var sodaKey = $("#keys-soda");
-var sodaAmount = 0;
-var sandWitchKey = $("#keys-sandwitch");
-var sandWitchAmount = 0;
+
+var glassKey = "glass";
+var waterKey = "water";
+var sodaKey = "soda-beer0";
+var beerKey = "beer-wine";
+var combinedKey = "combined";
+var combinedRedBullKey = "combined-redbull";
+var liquorKey = "liquor-ice";
+var snackKey = "snack";
+var sandwichKey = "sandwich";
+var sandwichPizzaKey = "sandwich-pizza-hot";
+
 var total = 0;
+var items = GetDefaultItems();
 
 var uiFontSize = 30;
 try {
@@ -31,17 +38,36 @@ function updateFontSize() {
 }
 
 function addItem(name) {
+  items[name]++;
   switch (name) {
-    case "water":
-      waterAmount++;
+    case glassKey:
       total += 1;
       break;
-    case "soda":
-      sodaAmount++;
+    case waterKey:
+      total += 1;
+      break;
+    case sodaKey:
+      total += 2;
+      break;
+    case beerKey:
       total += 3;
       break;
-    case "sandWitch":
-      sandWitchAmount++;
+    case combinedKey:
+      total += 6;
+      break;
+    case combinedRedBullKey:
+      total += 8;
+      break;
+    case liquorKey:
+      total += 5;
+      break;
+    case snackKey:
+      total += 3;
+      break;
+    case sandwichKey:
+      total += 4;
+      break;
+    case sandwichPizzaKey:
       total += 5;
       break;
   }
@@ -50,17 +76,35 @@ function addItem(name) {
 
 function reset() {
   total = 0;
-  waterAmount = 0;
-  sodaAmount = 0;
-  sandWitchAmount = 0;
-
+  items = GetDefaultItems();
   updateUI();
 }
 
 function updateUI() {
   totalSpan.text(total + "€");
 
-  waterKey.children(".amount").text(waterAmount);
-  sodaKey.children(".amount").text(sodaAmount);
-  sandWitchKey.children(".amount").text(sandWitchAmount);
+  for (var k in items) {
+    updateKeyText(k);
+  }
+}
+
+function updateKeyText(keyId) {
+  $("#keys-" + keyId)
+    .children(".amount")
+    .text(items[keyId]);
+}
+
+function GetDefaultItems() {
+  return {
+    [sodaKey]: 0,
+    [glassKey]: 0,
+    [waterKey]: 0,
+    [beerKey]: 0,
+    [combinedKey]: 0,
+    [combinedRedBullKey]: 0,
+    [liquorKey]: 0,
+    [snackKey]: 0,
+    [sandwichKey]: 0,
+    [sandwichPizzaKey]: 0,
+  };
 }

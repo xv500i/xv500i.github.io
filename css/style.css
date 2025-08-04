@@ -6,12 +6,18 @@ body {
 #font-container {
   display: grid;
   grid-template-columns: 1fr;
+  margin-top: 2em;
+}
+
+.amount {
+  font-weight: bold;
 }
 
 #calculator-screen {
   text-align: right;
   display: grid;
   grid-template-columns: 1fr;
+  margin-bottom: 0.5em;
 }
 
 #calculator-screen > div {
@@ -22,17 +28,18 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  gap: 0.5em;
 }
 
 .grid-container > button {
   background-color: #f1f1f1;
   border: 1px solid black;
   padding: 10px;
-  text-align: center;
+  text-align: left;
 }
 
 #keys-c {
-  grid-column-end: span 3;
+  grid-column-end: span 1;
   background-color: orange;
 }
