@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 0.2em;
 }
 
 #font-container {
@@ -17,7 +17,7 @@ body {
   text-align: right;
   display: grid;
   grid-template-columns: 1fr;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.2em;
 }
 
 #calculator-screen > div {
@@ -29,7 +29,7 @@ body {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.5em;
+  gap: 0.2em;
 }
 
 .grid-container > button {
